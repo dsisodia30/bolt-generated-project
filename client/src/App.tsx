@@ -1,5 +1,5 @@
 import React from 'react'
-    import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+    import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
     import Employees from './components/employees/EmployeeList'
     import EmployeeForm from './components/employees/EmployeeForm'
     import EmployeeDetails from './components/employees/EmployeeDetails'
@@ -12,13 +12,14 @@ import React from 'react'
     import PaymentList from './components/salary/SalaryList'
     import PaymentForm from './components/salary/SalaryForm'
     import PaymentDetails from './components/salary/SalaryDetails'
-    import ProjectList from './components/project/ProjectList'
+    // import ProjectList from './components/project/ProjectList'
     import ProjectForm from './components/project/ProjectForm'
-    import ProjectDetails from './components/project/ProjectDetails'
+    // import ProjectDetails from './components/project/ProjectDetails'
     import Login from './components/auth/Login'
     import Registration from './components/auth/Registration'
     import Profile from './components/auth/Profile'
     import PrivateRoute from './components/auth/PrivateRoute'
+import Dashboard from './components/dashboard/Dashboard'
 
     function App() {
       return (
@@ -34,9 +35,9 @@ import React from 'react'
                 <li><Link to="/profile">Profile</Link></li>
               </ul>
             </nav>
-            <Switch>
-              <Route path="/login" component={Login} />
-              <Route path="/register" component={Registration} />
+            <Routes>
+              <Route path="/login" Component={Login} />
+              <Route path="/register" Component={Registration} />
               <PrivateRoute path="/profile" component={Profile} />
               <PrivateRoute path="/dashboard" component={Dashboard} />
               <PrivateRoute path="/employees" component={Employees} />
@@ -51,20 +52,15 @@ import React from 'react'
               <PrivateRoute path="/salary/create" component={PaymentForm} />
               <PrivateRoute path="/salary/:id/edit" component={PaymentForm} />
               <PrivateRoute path="/salary/:id/details" component={PaymentDetails} />
-              <PrivateRoute path="/projects" component={ProjectList} />
+              {/* <PrivateRoute path="/projects" component={ProjectList} /> */}
               <PrivateRoute path="/projects/create" component={ProjectForm} />
               <PrivateRoute path="/projects/:id/edit" component={ProjectForm} />
-              <PrivateRoute path="/projects/:id/details" component={ProjectDetails} />
-              <Route path="/" exact component={Login} />
-            </Switch>
+              {/* <PrivateRoute path="/projects/:id/details" component={ProjectDetails} /> */}
+              <Route path="/" element={<Login />} />
+            </Routes>
           </div>
         </Router>
       )
     }
 
     export default App
-  </boltArtifact>
-
-  <boltAction type="shell">
-    npm install
-    npm run dev

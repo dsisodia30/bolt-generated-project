@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
     import { useNavigate } from 'react-router-dom'
     import axios from 'axios'
-    import Spinner from '../components/Spinner'
+    // import Spinner from '../components/Spinner'
 
     const Login = () => {
       const [formData, setFormData] = useState({
@@ -68,8 +68,11 @@ import React, { useState } from 'react'
               </label>
             </div>
             {error && <div className="error-message">{error}</div>}
-            <button type="submit" disabled={isLoading}>
+            {/* <button type="submit" disabled={isLoading}>
               {isLoading ? <Spinner /> : 'Login'}
+            </button> */}
+            <button type="submit" disabled={isLoading}>
+              {isLoading ? '' : 'Login'}
             </button>
           </form>
           <p>

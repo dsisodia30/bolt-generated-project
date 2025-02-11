@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-    import { LineChart, BarChart, PieChart } from 'react-apexcharts'
+    import Chart from 'react-apexcharts'
     import axios from 'axios'
     import Spinner from '../Spinner'
 
@@ -14,7 +14,7 @@ import React, { useState, useEffect } from 'react'
 
       useEffect(() => {
         axios.get('http://localhost:5000/api/dashboard/summary')
-          .then(response => {
+          .then((response:any) => {
             setSummary(response.data)
             setIsLoading(false)
           })
@@ -51,7 +51,7 @@ import React, { useState, useEffect } from 'react'
           </div>
           <div className="charts">
             <div className="chart">
-              <LineChart
+              <Chart
                 options={{
                   chart: { type: 'line' },
                   series: [
@@ -63,11 +63,11 @@ import React, { useState, useEffect } from 'react'
                   xaxis: {
                     categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
                   }
-                }
+                }}
               />
             </div>
             <div className="chart">
-              <BarChart
+              <Chart
                 options={{
                   chart: {
                     type: 'bar'
@@ -90,18 +90,17 @@ import React, { useState, useEffect } from 'react'
                     title: {
                       text: 'Employees'
                     }
-                  }
-                }
+                  },
                 series: [
                   {
                     name: 'Active Employees',
                     data: [44, 52, 38, 24, 22, 40, 23, 45, 12, 18, 36, 20]
                   }
-                ]
+                ]}}
               />
             </div>
             <div className="chart">
-              <PieChart
+              <Chart
                 options={{
                   labels: ['Active', 'On Leave', 'Pending', 'Terminated'],
                   responsive: [{
@@ -114,10 +113,12 @@ import React, { useState, useEffect } from 'react'
                         position: 'bottom'
                       }
                     }
-                  }]
-                }
+                  }],
                 series: [44, 23, 37, 15],
-                type: 'pie'
+                chart: {
+                  type: 'pie'
+                }
+                }}
               />
             </div>
           </div>

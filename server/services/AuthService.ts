@@ -1,5 +1,5 @@
-import { UserRepository } from './repositories/UserRepository'
-    import { RoleRepository } from './repositories/RoleRepository'
+import { UserRepository } from '../repositories/UserRepository'
+    import { RoleRepository } from '../repositories/RoleRepository'
     import { User } from '../entities/User'
     import { Role } from '../entities/Role'
     import { sign, verify } from 'jsonwebtoken'

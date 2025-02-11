@@ -15,7 +15,7 @@ import { Request, Response } from 'express'
           const employees = await this.employeeService.getAll()
           res.json(employees)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 
@@ -29,7 +29,7 @@ import { Request, Response } from 'express'
           }
           res.json(employee)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 
@@ -38,7 +38,7 @@ import { Request, Response } from 'express'
           const result = await this.employeeService.create(req.body)
           res.status(201).json(result)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 
@@ -48,7 +48,7 @@ import { Request, Response } from 'express'
           const result = await this.employeeService.update(id, req.body)
           res.json(result)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 
@@ -58,7 +58,7 @@ import { Request, Response } from 'express'
           const jobs = await this.employeeService.getJobHistory(Number(employeeId))
           res.json(jobs)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 
@@ -68,7 +68,7 @@ import { Request, Response } from 'express'
           const contracts = await this.employeeService.getContracts(Number(employeeId))
           res.json(contracts)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 
@@ -78,7 +78,7 @@ import { Request, Response } from 'express'
           const salaries = await this.employeeService.getSalaries(Number(employeeId))
           res.json(salaries)
         } catch (error) {
-          res.status(500).json({ message: error.message })
+          res.status(500).json({ message: (error as Error).message })
         }
       }
 

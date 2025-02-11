@@ -1,5 +1,8 @@
 import { EmployeeRepository } from '../repositories/EmployeeRepository'
-    import { createEmployeeSchema, updateEmployeeSchema } from '../entities/Employee'
+    import { createEmployeeSchema, Employee, updateEmployeeSchema } from '../entities/Employee'
+import { Contract } from '../entities/Contract';
+import { Job } from '../entities/Job';
+import { Salary } from '../entities/Salary';
 
     export class EmployeeService {
       private employeeRepository: EmployeeRepository

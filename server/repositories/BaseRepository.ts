@@ -1,4 +1,4 @@
-import { Entity, FindManyOptions, FindOneOptions, SaveOptions } from 'typeorm'
+import { Entity, FindManyOptions, FindOneOptions, SaveOptions, getRepository } from 'typeorm'
 
     export abstract class BaseRepository<T extends Entity> {
       protected repository;
@@ -13,7 +13,7 @@ import { Entity, FindManyOptions, FindOneOptions, SaveOptions } from 'typeorm'
         return this.repository.find(options);
       }
 
-      async findOne(id: number | string, options?: FindOneOptions<T>): Promise<T | undefined> {
+      async findOne(id: number | string, options?: FindOneOptions<T>): Promise<T | null> {
         return this.repository.findOne(id, options);
       }
 

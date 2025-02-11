@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react'
 
       useEffect(() => {
         axios.get('http://localhost:5000/api/employees')
-          .then(response => {
+          .then((response:any) => {
             setEmployees(response.data)
             setIsLoading(false)
           })
@@ -24,7 +24,7 @@ import React, { useState, useEffect } from 'react'
         if (confirm('Are you sure you want to delete this employee?')) {
           axios.delete(`http://localhost:5000/api/employees/${id}`)
             .then(() => {
-              setEmployees(employees.filter(employee => employee.id !== id))
+              setEmployees(employees.filter((employee:any) => employee.id !== id))
             })
             .catch(error => {
               console.error('Error deleting employee:', error)
@@ -56,7 +56,7 @@ import React, { useState, useEffect } from 'react'
                 </tr>
               </thead>
               <tbody>
-                {employees.map(employee => (
+                {employees.map((employee: any) => (
                   <tr key={employee.id}>
                     <td>{employee.id}</td>
                     <td>

@@ -5,7 +5,7 @@ import { Entity } from 'typeorm'
     import { Salary } from '../entities/Salary'
     import { BaseRepository } from './BaseRepository'
 
-    export class EmployeeRepository extends BaseRepository<Employee> {
+    export class EmployeeRepository extends BaseRepository<Employee> {    
       protected getEntity(): new () => Employee {
         return Employee;
       }

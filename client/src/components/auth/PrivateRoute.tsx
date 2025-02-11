@@ -1,5 +1,5 @@
 import React from 'react'
-    import { Route, Redirect } from 'react-router-dom'
+    import { Route, Navigate } from 'react-router-dom'
     import axios from 'axios'
 
     const PrivateRoute = ({ component: Component, ...rest }) => {
@@ -7,10 +7,10 @@ import React from 'react'
       const user = localStorage.getItem('user')
 
       if (!token || !user) {
-        return <Redirect to="/login" />
+        return <Navigate to="/login" />
       }
 
-      return <Route {...rest} render={(props) => <Component {...props} />} />
+      return <Route {...rest} element={<Component />} />
     }
 
     export default PrivateRoute
