@@ -2,6 +2,7 @@ import 'reflect-metadata'
     import { createConnection } from 'typeorm'
     import express, { Application } from 'express'
     import cors from 'cors'
+import apiRoutes from './routes/apiRoutes'
     import routes from './routes'
 
     const app: Application = express()
@@ -11,7 +12,7 @@ import 'reflect-metadata'
     app.use(express.json())
 
     // Routes
-    app.use('/', routes)
+    app.use('/api', apiRoutes)
 
     // Database connection
     createConnection({

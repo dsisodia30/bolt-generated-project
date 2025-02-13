@@ -1,4 +1,3 @@
-import { Leave } from '../entities/Leave'
 import { LeaveRepository } from '../repositories/LeaveRepository'
 
     export class LeaveService {

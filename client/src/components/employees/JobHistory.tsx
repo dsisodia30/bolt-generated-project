@@ -28,7 +28,7 @@ import React, { useState, useEffect } from 'react'
         <div className="job-history">
           <h1>Job History</h1>
           <div className="jobs">
-            {jobs.map(job => (
+            {jobs.map((job: any) => (
               <div key={job.id} className="job">
                 <p><strong>Job Title:</strong> {job.jobTitle}</p>
                 <p><strong>Department:</strong> {job.department}</p>

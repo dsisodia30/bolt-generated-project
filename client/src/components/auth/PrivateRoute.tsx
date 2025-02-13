@@ -1,16 +1,20 @@
-import React from 'react'
-    import { Route, Navigate } from 'react-router-dom'
-    import axios from 'axios'
+import React from 'react';
+import { Route, Navigate } from 'react-router-dom';
 
-    const PrivateRoute = ({ component: Component, ...rest }) => {
-      const token = localStorage.getItem('token')
-      const user = localStorage.getItem('user')
+interface PrivateRouteProps {
+  component: React.FC<any>;
+  [rest: string]: any; // Allow other props
+}
 
-      if (!token || !user) {
-        return <Navigate to="/login" />
-      }
+const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+  const token = localStorage.getItem('token');
+  const user = localStorage.getItem('user');
 
-      return <Route {...rest} element={<Component />} />
-    }
+  if (!token || !user) {
+    return <Navigate to="/login" />;
+  }
 
-    export default PrivateRoute
+  return <Route {...rest} element={<Component />} />;
+}
+
+export default PrivateRoute;

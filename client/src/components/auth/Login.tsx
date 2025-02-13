@@ -1,16 +1,23 @@
 import React, { useState } from 'react'
     import { useNavigate } from 'react-router-dom'
     import axios from 'axios'
-    // import Spinner from '../components/Spinner'
+import Spinner from '../Spinner';
 
-    const Login = () => {
-      const [formData, setFormData] = useState({
-        username: '',
-        password: '',
-        rememberMe: false
-      })
-      const [isLoading, setIsLoading] = useState(false)
-      const [error, setError] = useState('')
+interface FormData {
+  username: string;
+  password: string;
+  rememberMe: boolean;
+}
+
+const Login: React.FC = () => {
+  const [formData, setFormData] = useState<FormData>({
+    username: '',
+    password: '',
+    rememberMe: false
+  });
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+
 
       const navigate = useNavigate()
 
@@ -20,12 +27,12 @@ import React, { useState } from 'react'
         setError('')
 
         try {
-          const response = await axios.post('http://localhost:5000/api/auth/login', {
+          const response = await axios.post<{ token: string; user: any }>('http://localhost:5000/api/auth/login', {
             username: formData.username,
             password: formData.password
           })
 
-          const { token, user } = response.data
+          const { token, user } = response.data;
           localStorage.setItem('token', token)
           localStorage.setItem('user', JSON.stringify(user))
           
@@ -46,7 +53,7 @@ import React, { useState } from 'react'
               <input
                 type="text"
                 value={formData.username}
-                onChange={(e) => setFormData({...formData, username: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, username: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -54,7 +61,7 @@ import React, { useState } from 'react'
               <input
                 type="password"
                 value={formData.password}
-                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -62,17 +69,14 @@ import React, { useState } from 'react'
                 <input
                   type="checkbox"
                   checked={formData.rememberMe}
-                  onChange={(e) => setFormData({...formData, rememberMe: e.target.checked})}
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, rememberMe: e.target.checked})}
                 />
                 Remember me
               </label>
             </div>
             {error && <div className="error-message">{error}</div>}
-            {/* <button type="submit" disabled={isLoading}>
-              {isLoading ? <Spinner /> : 'Login'}
-            </button> */}
             <button type="submit" disabled={isLoading}>
-              {isLoading ? '' : 'Login'}
+              {isLoading ? <Spinner /> : 'Login'}
             </button>
           </form>
           <p>

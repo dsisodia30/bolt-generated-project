@@ -1,9 +1,10 @@
-import React from 'react'
+import React from 'react';
+import './Spinner.css'; // Assuming you will create a CSS file for styling
 
-    const Spinner = () => (
-      <div className="spinner">
-        <div className="spinner-circle"></div>
-      </div>
-    )
+const Spinner: React.FC = () => (
+  <div className="spinner">
+    <div className="spinner-circle"></div>
+  </div>
+);
 
-    export default Spinner
+export default Spinner;

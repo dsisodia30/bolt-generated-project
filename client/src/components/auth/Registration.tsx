@@ -1,17 +1,27 @@
 import React, { useState } from 'react'
     import { useNavigate } from 'react-router-dom'
     import axios from 'axios'
-    import Spinner from '../components/Spinner'
+import Spinner from '../Spinner';
 
-    const Registration = () => {
-      const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        username: '',
-        email: '',
-        password: '',
-        confirmPassword: ''
-      })
+interface RegistrationFormData {
+  firstName: string;
+  lastName: string;
+  username: string;
+  email: string;
+  password: string;
+  confirmPassword: string;
+}
+
+const Registration: React.FC = () => {
+  const [formData, setFormData] = useState<RegistrationFormData>({
+    firstName: '',
+    lastName: '',
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+
       const [isLoading, setIsLoading] = useState(false)
       const [error, setError] = useState('')
 
@@ -29,7 +39,7 @@ import React, { useState } from 'react'
         }
 
         try {
-          const response = await axios.post('http://localhost:5000/api/auth/register', {
+          const response = await axios.post<{ token: string; user: any }>('http://localhost:5000/api/auth/register', {
             firstName: formData.firstName,
             lastName: formData.lastName,
             username: formData.username,
@@ -58,7 +68,7 @@ import React, { useState } from 'react'
               <input
                 type="text"
                 value={formData.firstName}
-                onChange={(e) => setFormData({...formData, firstName: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, firstName: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -66,7 +76,7 @@ import React, { useState } from 'react'
               <input
                 type="text"
                 value={formData.lastName}
-                onChange={(e) => setFormData({...formData, lastName: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, lastName: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -74,7 +84,7 @@ import React, { useState } from 'react'
               <input
                 type="text"
                 value={formData.username}
-                onChange={(e) => setFormData({...formData, username: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, username: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -82,7 +92,7 @@ import React, { useState } from 'react'
               <input
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({...formData, email: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, email: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -90,7 +100,7 @@ import React, { useState } from 'react'
               <input
                 type="password"
                 value={formData.password}
-                onChange={(e) => setFormData({...formData, password: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, password: e.target.value})}
               />
             </div>
             <div className="form-group">
@@ -98,7 +108,7 @@ import React, { useState } from 'react'
               <input
                 type="password"
                 value={formData.confirmPassword}
-                onChange={(e) => setFormData({...formData, confirmPassword: e.target.value})}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setFormData({...formData, confirmPassword: e.target.value})}
               />
             </div>
             {error && <div className="error-message">{error}</div>}
