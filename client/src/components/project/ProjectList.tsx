@@ -1,12 +1,16 @@
-import React, { useState, useEffect } from 'react'
-    import { Link, useNavigate } from 'react-router-dom'
-    import axios from 'axios'
-    import Spinner from '../Spinner'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import Spinner from '../Spinner'
+import type { Project } from '../../types/project'
+
 
     const ProjectList = () => {
-      const [projects, setProjects] = useState([])
+      const [projects, setProjects] = useState<Project[]>([])
       const [isLoading, setIsLoading] = useState(true)
+      const [error, setError] = useState<string | null>(null)
       const navigate = useNavigate()
+
 
       useEffect(() => {
         axios.get('http://localhost:5000/api/projects')
@@ -16,13 +20,39 @@ import React, { useState, useEffect } from 'react'
           })
           .catch(error => {
             console.error('Error fetching projects:', error)
+            setError('Failed to load projects. Please try again later.')
             setIsLoading(false)
           })
+
       }, [])
 
       if (isLoading) {
-        return <Spinner />
+        return (
+          <div className="loading-state">
+            <Spinner />
+            <p>Loading projects...</p>
+          </div>
+        )
       }
+
+      if (error) {
+        return (
+          <div className="error-state">
+            <p>{error}</p>
+            <button onClick={() => window.location.reload()}>Retry</button>
+          </div>
+        )
+      }
+
+      if (projects.length === 0) {
+        return (
+          <div className="empty-state">
+            <p>No projects found.</p>
+            <button onClick={() => navigate('create')}>Create New Project</button>
+          </div>
+        )
+      }
+
 
       return (
         <div className="project-list">

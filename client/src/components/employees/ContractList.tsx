@@ -1,15 +1,25 @@
 import React, { useState, useEffect } from 'react'
+
+interface Contract {
+  id: number;
+  contractId: string;
+  type: string;
+  startDate: string;
+  endDate: string;
+  status: string;
+  notes: string;
+}
     import { useParams } from 'react-router-dom'
     import axios from 'axios'
     import Spinner from '../Spinner'
 
     const ContractList = () => {
-      const [contracts, setContracts] = useState([])
+      const [contracts, setContracts] = useState<Contract[]>([])
       const [isLoading, setIsLoading] = useState(true)
       const { employeeId } = useParams()
 
       useEffect(() => {
-        axios.get(`http://localhost:5000/api/employees/${employeeId}/contracts`)
+        axios.get<Contract[]>(`http://localhost:5000/api/employees/${employeeId}/contracts`)
           .then(response => {
             setContracts(response.data)
             setIsLoading(false)

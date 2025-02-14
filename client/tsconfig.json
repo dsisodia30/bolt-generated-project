@@ -16,7 +16,9 @@
     "noEmit": true,                                   
     "jsx": "react-jsx",
     "rootDir": "src",
-    "noImplicitAny": false           
+    "noImplicitAny": false,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true          
   },
   "include": ["src"]
 }

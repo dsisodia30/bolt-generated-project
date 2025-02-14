@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
-    import { Link, useNavigate } from 'react-router-dom'
-    import axios from 'axios'
-    import Spinner from '../Spinner'
+import { Link, useNavigate } from 'react-router-dom'
+import axios from 'axios'
+import Spinner from '../Spinner'
+import type { Employee } from '../../types/employee'
+
 
     const EmployeeList = () => {
-      const [employees, setEmployees] = useState([])
+      const [employees, setEmployees] = useState<Employee[]>([])
       const [isLoading, setIsLoading] = useState(true)
       const navigate = useNavigate()
 
       useEffect(() => {
-        axios.get('http://localhost:5000/api/employees')
+        axios.get<Employee[]>('http://localhost:5000/api/employees')
           .then(response => {
             setEmployees(response.data)
             setIsLoading(false)
@@ -21,10 +23,12 @@ import React, { useState, useEffect } from 'react'
       }, [])
 
       const handleDelete = (id: number) => {
-        if (confirm('Are you sure you want to delete this employee?')) {
+
+        if (window.confirm('Are you sure you want to delete this employee?')) {
+
           axios.delete(`http://localhost:5000/api/employees/${id}`)
             .then(() => {
-              setEmployees(employees.filter(employee => employee.id !== id))
+              setEmployees(employees.filter(employee => Number(employee.id) === id))
             })
             .catch(error => {
               console.error('Error deleting employee:', error)
@@ -56,7 +60,8 @@ import React, { useState, useEffect } from 'react'
                 </tr>
               </thead>
               <tbody>
-                {employees.map((employee: any) => (
+                {employees.map((employee: Employee) => (
+
                   <tr key={employee.id}>
                     <td>{employee.id}</td>
                     <td>
@@ -75,6 +80,7 @@ import React, { useState, useEffect } from 'react'
                     <td>
                       <button onClick={() => navigate(`${employee.id}/edit`)}>Edit</button>
                       <button onClick={() => handleDelete(employee.id)}>Delete</button>
+
                     </td>
                   </tr>
                 ))}

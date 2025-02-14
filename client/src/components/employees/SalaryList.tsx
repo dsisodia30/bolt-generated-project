@@ -2,14 +2,24 @@ import React, { useState, useEffect } from 'react'
     import { useParams } from 'react-router-dom'
     import axios from 'axios'
     import Spinner from '../Spinner'
+    
+    interface Salary {
+      id: number;
+      salaryId: string;
+      amount: number;
+      currency: string;
+      paymentMethod: string;
+      effectiveDate: string;
+      notes: string;
+    }
 
     const SalaryList = () => {
-      const [salaries, setSalaries] = useState([])
+      const [salaries, setSalaries] = useState<Salary[]>([])
       const [isLoading, setIsLoading] = useState(true)
       const { employeeId } = useParams()
 
       useEffect(() => {
-        axios.get(`http://localhost:5000/api/employees/${employeeId}/salaries`)
+        axios.get<Salary[]>(`http://localhost:5000/api/employees/${employeeId}/salaries`)
           .then(response => {
             setSalaries(response.data)
             setIsLoading(false)

@@ -3,13 +3,23 @@ import React, { useState, useEffect } from 'react'
     import axios from 'axios'
     import Spinner from '../Spinner'
 
+    interface Job {
+      id: number;
+      jobTitle: string;
+      department: string;
+      location: string;
+      startDate: string;
+      endDate: string | null;
+      status: string;
+    }
+
     const JobHistory = () => {
-      const [jobs, setJobs] = useState([])
+      const [jobs, setJobs] = useState<Job[]>([])
       const [isLoading, setIsLoading] = useState(true)
       const { employeeId } = useParams()
 
       useEffect(() => {
-        axios.get(`http://localhost:5000/api/employees/${employeeId}/job-history`)
+        axios.get<Job[]>(`http://localhost:5000/api/employees/${employeeId}/job-history`)
           .then(response => {
             setJobs(response.data)
             setIsLoading(false)

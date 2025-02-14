@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
     import { useNavigate, useParams } from 'react-router-dom'
     import axios from 'axios'
     import Spinner from '../Spinner'
+import { Employee } from '../../types/employee'
 
     const EmployeeForm = () => {
       const [formData, setFormData] = useState({
@@ -20,7 +21,7 @@ import React, { useState } from 'react'
 
       useEffect(() => {
         if (id) {
-          axios.get(`http://localhost:5000/api/employees/${id}`)
+          axios.get<Employee>(`http://localhost:5000/api/employees/${id}`)
             .then(response => {
               const employee = response.data
               setFormData({

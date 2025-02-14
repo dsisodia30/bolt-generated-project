@@ -1,10 +1,11 @@
 import 'reflect-metadata'
-    import { createConnection, DataSource } from 'typeorm'
-    import express, { Application } from 'express'
-    import cors from 'cors'
+import { createConnection, DataSource } from 'typeorm'
+import express, { Application } from 'express'
+import cors from 'cors'
 import apiRoutes from './routes/apiRoutes'
-    import routes from './routes'
-import { AppDataSource } from './AppDataSource'
+import routes from './routes'
+import { AppDataSource, initializeDB } from './AppDataSource'
+
 
     const app: Application = express()
 
@@ -31,7 +32,8 @@ import { AppDataSource } from './AppDataSource'
 //   migrationsTableName: 'migrations'
 // })
 
-AppDataSource.initialize()
+initializeDB()
+  .then(() => AppDataSource.initialize())
   .then(() => {
     console.log('Database connection established')
     

@@ -3,9 +3,6 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom'
 import Employees from './components/employees/EmployeeList'
 import EmployeeForm from './components/employees/EmployeeForm'
 import EmployeeDetails from './components/employees/EmployeeDetails'
-import JobHistory from './components/employees/JobHistory'
-import ContractList from './components/employees/ContractList'
-import SalaryList from './components/employees/SalaryList'
 import LeaveList from './components/leave/LeaveList'
 import LeaveForm from './components/leave/LeaveForm'
 import LeaveDetails from './components/leave/LeaveDetails'
@@ -20,7 +17,7 @@ import Profile from './components/auth/Profile'
 import PrivateRoute from './components/auth/PrivateRoute'
 import Dashboard from './components/dashboard/Dashboard' // Importing Dashboard component
 
-function App() {
+function App(): JSX.Element {
   return (
     <Router>
       <div className="App">
@@ -37,23 +34,23 @@ function App() {
         <Routes>
           <Route path="/login" Component={Login} />
           <Route path="/register" Component={Registration} />
-          <PrivateRoute path="/profile" component={Profile} />
-          <PrivateRoute path="/dashboard" component={Dashboard} />
-          <PrivateRoute path="/employees" component={Employees} />
-          <PrivateRoute path="/employees/create" component={EmployeeForm} />
-          <PrivateRoute path="/employees/:id/edit" component={EmployeeForm} />
-          <PrivateRoute path="/employees/:id/details" component={EmployeeDetails} />
-          <PrivateRoute path="/leave" component={LeaveList} />
-          <PrivateRoute path="/leave/create" component={LeaveForm} />
-          <PrivateRoute path="/leave/:id/edit" component={LeaveForm} />
-          <PrivateRoute path="/leave/:id/details" component={LeaveDetails} />
-          <PrivateRoute path="/salary" component={PaymentList} />
-          <PrivateRoute path="/salary/create" component={PaymentForm} />
-          <PrivateRoute path="/salary/:id/edit" component={PaymentForm} />
-          <PrivateRoute path="/salary/:id/details" component={PaymentDetails} />
-          <PrivateRoute path="/projects" component={ProjectList} />
-          <PrivateRoute path="/projects/create" component={ProjectForm} />
-          <PrivateRoute path="/projects/:id/edit" component={ProjectForm} />
+          <Route path="/profile" element={<PrivateRoute component={Profile} />} />
+          <Route path="/dashboard" element={<PrivateRoute component={Dashboard} />} />
+          <Route path="/employees" element={<PrivateRoute component={Employees} />} />
+          <Route path="/employees/create" element={<PrivateRoute component={EmployeeForm} />} />
+          <Route path="/employees/:id/edit" element={<PrivateRoute component={EmployeeForm} />} />
+          <Route path="/employees/:id/details" element={<PrivateRoute component={EmployeeDetails} />} />
+          <Route path="/leave" element={<PrivateRoute component={LeaveList} />} />
+          <Route path="/leave/create" element={<PrivateRoute component={LeaveForm} />} />
+          <Route path="/leave/:id/edit" element={<PrivateRoute component={LeaveForm} />} />
+          <Route path="/leave/:id/details" element={<PrivateRoute component={LeaveDetails} />} />
+          <Route path="/salary" element={<PrivateRoute component={PaymentList} />} />
+          <Route path="/salary/create" element={<PrivateRoute component={PaymentForm} />} />
+          <Route path="/salary/:id/edit" element={<PrivateRoute component={PaymentForm} />} />
+          <Route path="/salary/:id/details" element={<PrivateRoute component={PaymentDetails} />} />
+          <Route path="/projects" element={<PrivateRoute component={ProjectList} />} />
+          <Route path="/projects/create" element={<PrivateRoute component={ProjectForm} />} />
+          <Route path="/projects/:id/edit" element={<PrivateRoute component={ProjectForm} />} />
           <Route path="/" Component={Login} />
         </Routes>
       </div>

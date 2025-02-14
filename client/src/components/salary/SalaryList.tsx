@@ -1,23 +1,34 @@
-import React, { useState, useEffect } from 'react'
-    import { Link, useNavigate } from 'react-router-dom'
-    import axios from 'axios'
-    import Spinner from '../Spinner'
+import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import axios from 'axios'
+
+import Spinner from '../Spinner'
+import type { Payment } from '../../types/payment'
+
+
 
     const SalaryList = () => {
-      const [payments, setPayments] = useState([])
+      const [payments, setPayments] = useState<Payment[]>([])
+
       const [isLoading, setIsLoading] = useState(true)
       const navigate = useNavigate()
 
+      const getPayments = async () => {
+        try {
+          const response = await axios.get<Payment[]>('http://localhost:5000/api/payments')
+          const payments = response.data
+
+
+          setPayments(payments)
+          setIsLoading(false)          
+        } catch(error) {
+          console.error('Error fetching payments:', error)
+          setIsLoading(false)
+        } 
+      }
+
       useEffect(() => {
-        axios.get('http://localhost:5000/api/payments')
-          .then(response => {
-            setPayments(response.data)
-            setIsLoading(false)
-          })
-          .catch(error => {
-            console.error('Error fetching payments:', error)
-            setIsLoading(false)
-          })
+        getPayments();
       }, [])
 
       if (isLoading) {
@@ -43,7 +54,8 @@ import React, { useState, useEffect } from 'react'
                 </tr>
               </thead>
               <tbody>
-                {payments.map(payment => (
+                {payments.map((payment: Payment) => (
+
                   <tr key={payment.id}>
                     <td>{payment.employee.firstName} {payment.employee.lastName}</td>
                     <td>{new Date(payment.paymentDate).toLocaleDateString()}</td>

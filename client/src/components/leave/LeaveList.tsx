@@ -1,15 +1,17 @@
-import React, { useState, useEffect } from 'react'
-    import { Link, useNavigate } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+
+    import { useNavigate } from 'react-router-dom'
     import axios from 'axios'
     import Spinner from '../Spinner'
+import { Leave } from '../../types/project'
 
     const LeaveList = () => {
-      const [leaves, setLeaves] = useState([])
+      const [leaves, setLeaves] = useState<Leave[]>([])
       const [isLoading, setIsLoading] = useState(true)
       const navigate = useNavigate()
 
       useEffect(() => {
-        axios.get('http://localhost:5000/api/leaves')
+        axios.get<Leave[]>('http://localhost:5000/api/leaves')
           .then(response => {
             setLeaves(response.data)
             setIsLoading(false)

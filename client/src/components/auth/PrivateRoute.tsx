@@ -1,12 +1,7 @@
 import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
-interface PrivateRouteProps {
-  component: React.FC<any>;
-  [rest: string]: any; // Allow other props
-}
-
-const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...rest }) => {
+const PrivateRoute = ({ component: Component, ...rest }) => {
   const token = localStorage.getItem('token');
   const user = localStorage.getItem('user');
 
@@ -14,7 +9,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component, ...re
     return <Navigate to="/login" />;
   }
 
-  return <Route {...rest} element={<Component />} />;
+  return <Component {...rest} />;
 }
 
 export default PrivateRoute;

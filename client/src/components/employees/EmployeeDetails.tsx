@@ -1,15 +1,16 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
     import { Link, useParams } from 'react-router-dom'
     import axios from 'axios'
     import Spinner from '../Spinner'
+import { Employee } from '../../types/employee'
 
     const EmployeeDetails = () => {
-      const [employee, setEmployee] = useState({})
+      const [employee, setEmployee] = useState<Employee>({} as Employee)
       const [isLoading, setIsLoading] = useState(true)
       const { id } = useParams()
 
       useEffect(() => {
-        axios.get(`http://localhost:5000/api/employees/${id}`)
+        axios.get<Employee>(`http://localhost:5000/api/employees/${id}`)
           .then(response => {
             setEmployee(response.data)
             setIsLoading(false)

@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
     import { useNavigate, useParams } from 'react-router-dom'
     import axios from 'axios'
     import Spinner from '../Spinner'
+import { Project } from '../../types/project'
 
     const ProjectForm = () => {
       const [formData, setFormData] = useState({
@@ -17,7 +18,7 @@ import React, { useState } from 'react'
 
       useEffect(() => {
         if (id) {
-          axios.get(`http://localhost:5000/api/projects/${id}`)
+          axios.get<Project>(`http://localhost:5000/api/projects/${id}`)
             .then(response => {
               const project = response.data
               setFormData({
