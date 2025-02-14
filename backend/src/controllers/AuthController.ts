@@ -1,25 +1,64 @@
-import { Request, Response, NextFunction } from 'express'
+import { Request, Response } from 'express'
 import { AuthService } from '../services/AuthService'
-import { User } from '../entities/User'
+import { z } from 'zod'
+
+const loginSchema = z.object({
+  username: z.string().min(1, 'Username is required'),
+  password: z.string().min(1, 'Password is required')
+})
 
 export class AuthController {
-  private authService = new AuthService()
+  private authService: AuthService
+
+  constructor() {
+    this.authService = new AuthService()
+  }
 
   public async register(req: Request, res: Response): Promise<void> {
     try {
-      const user = await this.authService.register(req.body)
-      res.status(201).json({ user, token: user.token })
-    } catch (error: any) {
-      res.status(500).json({ message: (error as Error).message })
+      const result = await this.authService.register(req.body)
+      res.status(201).json(result)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message })
+      } else {
+        res.status(500).json({ message: 'An unknown error occurred' })
+      }
     }
   }
 
-  public async login(req: Request, res: Response, next: NextFunction): Promise<void> {
+  public async login(req: Request, res: Response): Promise<void> {
     try {
-      const result = await this.authService.login(req.body.username, req.body.password)
-      res.json({ user: result.user, token: result.token })
-    } catch (error: any) {
-      res.status(401).json({ message: (error as Error).message })
+      let credentials: { username: string; password: string }
+      
+      // Handle both JSON and form-urlencoded content types
+      if (req.headers['content-type'] === 'application/x-www-form-urlencoded') {
+        credentials = {
+          username: req.body.username,
+          password: req.body.password
+        }
+      } else {
+        credentials = req.body
+      }
+
+      // Validate credentials
+      const parsed = loginSchema.safeParse(credentials)
+      if (!parsed.success) {
+        res.status(400).json({
+          message: 'Invalid login data',
+          details: parsed.error.issues
+        })
+        return
+      }
+
+      const result = await this.authService.login(credentials.username, credentials.password)
+      res.json(result)
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        res.status(500).json({ message: error.message })
+      } else {
+        res.status(500).json({ message: 'An unknown error occurred' })
+      }
     }
   }
 }

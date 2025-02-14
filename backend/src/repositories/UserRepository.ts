@@ -1,4 +1,4 @@
-import { Entity, FindOneOptions } from 'typeorm'
+import { Entity, FindOneOptions, FindOptionsWhere } from 'typeorm'
     import { User } from '../entities/User'
     import { BaseRepository } from './BaseRepository'
 
@@ -8,10 +8,10 @@ import { Entity, FindOneOptions } from 'typeorm'
       }
 
       async findByUsername(username: string): Promise<User | null> {
-        return await this.findOne(username, { where: { username } } as FindOneOptions<User>);
+        return await this.repository.findOneBy({ username } as FindOptionsWhere<User>);
       }
 
       async findByEmail(email: string): Promise<User | null> {
-        return await this.findOne(email, { where: { email } } as FindOneOptions<User>);
+        return await this.repository.findOneBy({ email } as FindOptionsWhere<User>);
       }
     }

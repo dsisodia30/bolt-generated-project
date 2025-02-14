@@ -1,17 +1,7 @@
 import { Entity, FindManyOptions, FindOneOptions, getRepository, SaveOptions, DeepPartial, DataSource } from 'typeorm';
 import { ExtendedBaseEntity } from '../entities/BaseEntity';
+import { AppDataSource } from '../AppDataSource';
 
-const AppDataSource = new DataSource({
-  type: 'mysql', // Change to your database type
-  host: 'localhost',
-  port: 3306,
-  username: 'root',
-  password: 'root',
-  database: 'hrm',
-  entities: [__dirname + '/entities/*.ts'],
-  synchronize: true,
-  logging: true
-})
 
 export abstract class BaseRepository<T extends ExtendedBaseEntity> {
   protected repository;
